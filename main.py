@@ -34,23 +34,21 @@ def equations_to_matrix(equations): #we pass a list of equations and iterate ove
 
 
 
-def calculate_new_rows(colum, number):
-    new_colum = []
-    for element in colum:
-        new_colum.append(element * number)
+def calculate_new_rows(row, number):
+    new_row = []
+    for element in row:
+        new_row.append(element * number)
 
-    #print(f"New colum  :{colum,} to {new_colum} with {number}")
-    return new_colum
-
+    return new_row
 
 
-def subtract_rows(colum0, colum1):
-    new_colum = []
-    for i in range(len(colum0)):
-        new_colum.append(colum0[i] - colum1[i])
 
-    #print(f"Subtraction: {colum0} - {colum1} = {new_colum}")
-    return new_colum
+def subtract_rows(row0, row1):
+    new_row = []
+    for i in range(len(row0)):
+        new_row.append(row0[i] - row1[i])
+
+    return new_row
 
 
 
@@ -95,29 +93,6 @@ def build_equation(row, var_names):
     return Eq(left_side, right_side)
 
 
-def calculate_values(matrix, variable_names):
-    print(variable_names)
-
-    # find the max colum number
-    max_colum_number = 0
-    for colum in matrix:
-        max_colum_number += 1
-
-    # find the max row number
-    max_row_number = 0
-    for row in matrix[0]:
-        max_row_number += 1
-
-
-    for colum in range(max_colum_number-1, -1, -1):
-        print(matrix[colum])
-
-
-
-
-    return 1
-
-
 
 
 
@@ -150,7 +125,5 @@ def get_equations(): #ask the user for equations
 #eqs = get_equations()
 eqs = ["2x + 3y + 1z = 1","4x-1y+3z =11", "3x+1y-1z = 0"]
 Matrix, Variable_names =equations_to_matrix(eqs)
-
+print(Matrix)
 changed = matrix_zeros(Matrix)
-
-calculate_values(Matrix, Variable_names)
