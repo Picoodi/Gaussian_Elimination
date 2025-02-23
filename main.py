@@ -1,6 +1,7 @@
 from sympy import symbols, Eq, solve
 
 
+
 def equations_to_matrix(equations): #we pass a list of equations and iterate over all of them to create a matrix of all components
     matrix = []
     variable_names = []
@@ -86,14 +87,17 @@ def matrix_zeros(matrix):
 
 
 
-def build_equation(row, var_names):
+def solve_matrix_equations(matrix, var_names):
     variables = symbols(' '.join(var_names))
-    left_side = sum(coef * var for coef, var in zip(row[:-1], variables) if coef != 0)
-    right_side = row[-1]
-    return Eq(left_side, right_side)
 
+    equations = []
+    for row in matrix:
+        left_side = sum(coef * var for coef, var in zip(row[:-1], variables))
+        right_side = row[-1]
+        equation = Eq(left_side, right_side)
+        equations.append(equation)
 
-
+    return solve(equations)
 
 
 def get_equations(): #ask the user for equations
@@ -121,9 +125,23 @@ def get_equations(): #ask the user for equations
     return equations_list
 
 
+if __name__ == '__main__':
+    Equations = get_equations()
+    Matrix, Variable_names =equations_to_matrix(Equations)
+    Changed_Matrix = matrix_zeros(Matrix)
+    solution = solve_matrix_equations(Matrix, Variable_names)
 
-#eqs = get_equations()
-eqs = ["2x + 3y + 1z = 1","4x-1y+3z =11", "3x+1y-1z = 0"]
-Matrix, Variable_names =equations_to_matrix(eqs)
-print(Matrix)
-changed = matrix_zeros(Matrix)
+    print(f"The linear equation system with the equations:")
+    for eq in range(len(Equations)):
+        print(f"{eq+1}:  {Equations[eq]}")
+
+    print("")
+    print(f"And the variables: \n {Variable_names}")
+    print("")
+    print(f"Creates a matrix of the form:")
+    for Row in Changed_Matrix:
+        print(Row)
+    print("")
+    print("Has the solutions: ")
+    for var, value in solution.items():
+        print(f"{var} = {value}")
