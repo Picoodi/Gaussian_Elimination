@@ -51,15 +51,18 @@ def matrix_zeros(matrix):
         max_colum_number += 1
 
 
-
-
     for colum in range(1,max_colum_number):
         for row in range(colum):
-            new_colum = calculate_new_column(matrix[colum], matrix[0][row])
-
-            new_colum0 = calculate_new_column(matrix[0], matrix[colum][row])
-
-            changed_matrix.append(subtract_columns(new_colum0, new_colum))
+            if row == 0:
+                first_colum = calculate_new_column(matrix[0], matrix[colum][row])
+                #print(f"First:{first_colum} number was {matrix[colum][row]}")
+                new_colum = calculate_new_column(matrix[colum], matrix[0][row])
+                #print(f"New:{new_colum}")
+                co = subtract_columns(first_colum, new_colum)
+                #print(co)
+                changed_matrix.append(co)
+            else:
+                pass
 
     return changed_matrix
 
