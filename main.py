@@ -29,42 +29,63 @@ def calculate_new_column(colum, number):
     for element in colum:
         new_colum.append(element * number)
 
+    print(f"New colum  :{colum,} to {new_colum} with {number}")
     return new_colum
 
 
 
-def subtract_columns(colum0, colum):
+def subtract_columns(colum0, colum1):
     new_colum = []
     for i in range(len(colum0)):
-        new_colum.append(colum0[i] - colum[i])
+        new_colum.append(colum0[i] - colum1[i])
 
+    print(f"Subtraction: {colum0} - {colum1} = {new_colum}")
     return new_colum
 
 
 
 def matrix_zeros(matrix):
-    changed_matrix = [matrix[0]]
+    changed_matrix = []
 
     #find the max colum number
     max_colum_number = 0
     for colum in matrix:
         max_colum_number += 1
 
+    # find the max row number
+    max_row_number = 0
+    for row in matrix[0]:
+        max_row_number += 1
 
-    for colum in range(1,max_colum_number):
-        for row in range(colum):
-            if row == 0:
+    for row in range(max_row_number-2): #eins weniger wegen der informatik schreibweise und eines weils weniger sein soll
+        print(f"changing ROW to {row}")
+
+        for colum in range(1, max_colum_number): #first colum always stays the same
+            print(f"changing COLUM to {colum}")
+
+            if row == 0: #then we have the first row always calculated with the zero colum
                 first_colum = calculate_new_column(matrix[0], matrix[colum][row])
                 #print(f"First:{first_colum} number was {matrix[colum][row]}")
                 new_colum = calculate_new_column(matrix[colum], matrix[0][row])
-                #print(f"New:{new_colum}")
+                # print(f"New:{new_colum}")
                 co = subtract_columns(first_colum, new_colum)
-                #print(co)
-                changed_matrix.append(co)
-            else:
-                pass
+                # print(co)
+                matrix[colum] = co
 
-    return changed_matrix
+            elif colum == max_colum_number-1: #if it is the last column we break
+                #print(max_colum_number, colum)
+                break
+
+            else:  # for the other columns we need the colum from one above but for the right zero colum we can go one up
+                colum = row+1 #the colum we want to change with the zeros is one more below
+                print(f"actuall colum {colum}")
+                column_above = calculate_new_column(matrix[colum-1], matrix[colum][row])
+                colum_here = calculate_new_column(matrix[colum], matrix[colum-1][row])
+                co = subtract_columns(column_above,colum_here)
+                matrix[colum] = co
+
+            print(matrix)
+    return matrix
 
 
 
