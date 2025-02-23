@@ -36,7 +36,7 @@ def calculate_new_column(colum, number):
 def subtract_columns(colum0, colum):
     new_colum = []
     for i in range(len(colum0)):
-        new_colum.append(colum0[i] + colum[i])
+        new_colum.append(colum0[i] - colum[i])
 
     return new_colum
 
